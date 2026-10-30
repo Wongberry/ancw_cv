@@ -1,416 +1,701 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="dark scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Aldo Wong | Software Developer</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            900: '#0c4a6e',
+                        },
+                        darkbg: {
+                            base: '#0b0f19',
+                            card: '#111827',
+                            border: '#1f293d',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
 
-    <link rel="stylesheet" href="css/style.css">
+    <!-- Google Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0b0f19;
+            color: #f3f4f6;
+        }
+        
+        /* Glassmorphism effects */
+        .glass-nav {
+            background: rgba(11, 15, 25, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .glass-card {
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-card:hover {
+            border-color: rgba(14, 165, 233, 0.4);
+            box-shadow: 0 10px 30px -10px rgba(14, 165, 233, 0.25);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b0f19;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1f293d;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0ea5e9;
+        }
+    </style>
 </head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-brand-500 selection:text-white">
 
-<body>
+    <!-- Header & Navegación / Selector de Idioma -->
+    <header class="top-header fixed top-0 left-0 w-full z-40 glass-nav border-b border-gray-800/60 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            
+            <!-- Logo / Brand -->
+            <a href="#" class="flex items-center gap-2 group">
+                <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-brand-400 to-brand-600 flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-brand-500/20 group-hover:scale-105 transition-transform">
+                    AW
+                </div>
+                <span class="font-semibold text-lg tracking-tight text-white group-hover:text-brand-400 transition-colors">Aldo Wong</span>
+            </a>
 
-    <!-- Selector de idioma -->
-    <header class="top-header">
-        <div class="language-selector">
-            <button id="btn-es" class="language active">ES</button>
-            <span>|</span>
-            <button id="btn-en" class="language">EN</button>
+            <!-- Right Controls: Nav Links + Language Selector -->
+            <div class="flex items-center gap-6">
+                <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-gray-300">
+                    <a href="#about" class="hover:text-brand-400 transition-colors" data-i18n="nav-about">Sobre Mí</a>
+                    <a href="#projects" class="hover:text-brand-400 transition-colors" data-i18n="nav-projects">Proyectos</a>
+                    <a href="#skills" class="hover:text-brand-400 transition-colors" data-i18n="nav-skills">Habilidades</a>
+                </nav>
+
+                <div class="h-4 w-px bg-gray-800 hidden md:block"></div>
+
+                <!-- Language Switcher -->
+                <div class="language-selector flex items-center bg-gray-900/90 p-1 rounded-lg border border-gray-800 text-xs font-semibold">
+                    <button id="btn-es" class="language active px-3 py-1.5 rounded-md transition-all duration-200 text-brand-400 bg-gray-800 shadow-sm" onclick="setLanguage('es')">ES</button>
+                    <span class="text-gray-600 px-1">|</span>
+                    <button id="btn-en" class="language px-3 py-1.5 rounded-md text-gray-400 hover:text-white transition-all duration-200" onclick="setLanguage('en')">EN</button>
+                </div>
+            </div>
         </div>
     </header>
 
+    <!-- Contenedor Principal -->
+    <main class="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-16 flex-grow">
 
-    <!-- Contenedor principal -->
-    <main class="container">
+        <!-- HERO SECTION -->
+        <section id="about" class="py-12 md:py-20 flex flex-col md:flex-row items-center justify-between gap-12">
+            <div class="flex-1 space-y-6 text-center md:text-left">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-400 text-xs font-medium">
+                    <span class="w-2 h-2 rounded-full bg-brand-400 animate-pulse"></span>
+                    <span data-i18n="hero-badge">Disponible para nuevos proyectos</span>
+                </div>
+                
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white leading-tight">
+                    <span data-i18n="hero-title-1">Transformando ideas en</span> <br class="hidden sm:inline"/>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-sky-300 to-blue-500" data-i18n="hero-title-2">Experiencias Digitales</span>
+                </h1>
 
-        <!-- Presentación -->
-        <section class="hero">
-
-            <div class="hero-content">
-
-                <p class="greeting" data-es="Hola, soy" data-en="Hello, I'm">
-                    Hola, soy
+                <p class="text-lg text-gray-400 max-w-2xl leading-relaxed mx-auto md:mx-0" data-i18n="hero-desc">
+                    Hola, soy Aldo Wong. Desarrollador de Software enfocado en construir aplicaciones web y sistemas de gestión modernos, eficientes y escalables. Apasionado por la buena arquitectura de software y el desarrollo de soluciones a medida.
                 </p>
 
-                <h1>Aldo Wong</h1>
+                <!-- Stack Highlights -->
+                <div class="pt-2 flex flex-wrap justify-center md:justify-start gap-2 text-xs">
+                    <span class="px-3 py-1.5 rounded-md bg-gray-800/80 border border-gray-700/50 text-gray-300 flex items-center gap-1.5">
+                        <i data-lucide="code-2" class="w-3.5 h-3.5 text-brand-400"></i> Full Stack
+                    </span>
+                    <span class="px-3 py-1.5 rounded-md bg-gray-800/80 border border-gray-700/50 text-gray-300 flex items-center gap-1.5">
+                        <i data-lucide="server" class="w-3.5 h-3.5 text-brand-400"></i> PHP & Laravel
+                    </span>
+                    <span class="px-3 py-1.5 rounded-md bg-gray-800/80 border border-gray-700/50 text-gray-300 flex items-center gap-1.5">
+                        <i data-lucide="layers" class="w-3.5 h-3.5 text-brand-400"></i> JavaScript & Tailwind
+                    </span>
+                    <span class="px-3 py-1.5 rounded-md bg-gray-800/80 border border-gray-700/50 text-gray-300 flex items-center gap-1.5">
+                        <i data-lucide="database" class="w-3.5 h-3.5 text-brand-400"></i> MySQL
+                    </span>
+                </div>
 
-                <h2
-                    data-es="Desarrollador de Software & Especialista en TI"
-                    data-en="Software Developer & IT Specialist">
-                    Desarrollador de Software & Especialista en TI
-                </h2>
+                <!-- Action Buttons -->
+                <div class="pt-4 flex flex-wrap items-center justify-center md:justify-start gap-4">
+                    <a href="#projects" class="px-6 py-3 rounded-xl bg-brand-500 hover:bg-brand-600 text-white font-medium text-sm transition-all shadow-lg shadow-brand-500/25 flex items-center gap-2">
+                        <span data-i18n="hero-btn-projects">Ver Proyectos</span>
+                        <i data-lucide="arrow-down" class="w-4 h-4"></i>
+                    </a>
+                    <a href="mailto:aldonoecanowong@gmail.com" class="px-6 py-3 rounded-xl bg-gray-800/80 hover:bg-gray-700/80 border border-gray-700 text-gray-200 font-medium text-sm transition-all flex items-center gap-2">
+                        <i data-lucide="mail" class="w-4 h-4 text-brand-400"></i>
+                        <span data-i18n="hero-btn-contact">Contactar</span>
+                    </a>
+                </div>
+            </div>
 
-                <p
-                    class="description"
-                    data-es="Profesional de Tecnologías de la Información con experiencia en desarrollo de aplicaciones web, bases de datos, servidores e infraestructura tecnológica."
-                    data-en="Information Technology professional with experience in web application development, databases, servers, and technology infrastructure.">
-                    Profesional de Tecnologías de la Información con experiencia en desarrollo de aplicaciones web, bases de datos, servidores e infraestructura tecnológica.
-                </p>
+            <!-- Hero Avatar / Visual -->
+            <div class="relative flex-shrink-0 w-64 h-64 sm:w-80 sm:h-80">
+                <div class="absolute inset-0 bg-gradient-to-tr from-brand-500 to-purple-600 rounded-full blur-2xl opacity-20 animate-pulse"></div>
+                <div class="relative w-full h-full rounded-2xl bg-gradient-to-b from-gray-800 to-gray-900 border border-gray-700/60 p-3 shadow-2xl flex flex-col justify-between overflow-hidden">
+                    <div class="flex items-center justify-between border-b border-gray-800 pb-3">
+                        <div class="flex gap-1.5">
+                            <span class="w-3 h-3 rounded-full bg-red-500/80"></span>
+                            <span class="w-3 h-3 rounded-full bg-yellow-500/80"></span>
+                            <span class="w-3 h-3 rounded-full bg-green-500/80"></span>
+                        </div>
+                        <span class="text-[10px] font-mono text-gray-500">developer_profile.php</span>
+                    </div>
+                    <div class="font-mono text-xs text-gray-300 space-y-2 py-4 px-2 overflow-x-auto">
+                        <p class="text-purple-400">&lt;?php</p>
+                        <p class="pl-2"><span class="text-blue-400">$developer</span> = [</p>
+                        <p class="pl-6"><span class="text-brand-400">'name'</span> =&gt; <span class="text-emerald-300">'Aldo Wong'</span>,</p>
+                        <p class="pl-6"><span class="text-brand-400">'role'</span> =&gt; <span class="text-emerald-300">'Software Developer'</span>,</p>
+                        <p class="pl-6"><span class="text-brand-400">'specialty'</span> =&gt; <span class="text-emerald-300">'Sistemas Web & Laravel'</span>,</p>
+                        <p class="pl-6"><span class="text-brand-400">'status'</span> =&gt; <span class="text-amber-300">'Desarrollando soluciones'</span></p>
+                        <p class="pl-2">];</p>
+                    </div>
+                    <div class="bg-gray-950/60 rounded-lg p-2.5 flex items-center gap-3 border border-gray-800">
+                        <div class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></div>
+                        <span class="text-xs font-mono text-gray-400" data-i18n="hero-code-footer">Soluciones ágiles y funcionales</span>
+                    </div>
+                </div>
+            </div>
+        </section>
 
+        <!-- PORTFOLIO / GALLERY SECTION -->
+        <section id="projects" class="py-16 border-t border-gray-800/80">
+            
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
+                <div>
+                    <h2 class="text-3xl font-bold text-white tracking-tight" data-i18n="projects-title">Proyectos Destacados</h2>
+                    <p class="text-gray-400 mt-2 text-sm sm:text-base" data-i18n="projects-subtitle">
+                        Explora los sistemas web y herramientas que he diseñado y desarrollado.
+                    </p>
+                </div>
+
+                <!-- Filter Controls -->
+                <div class="flex flex-wrap gap-2 bg-gray-900/80 p-1.5 rounded-xl border border-gray-800 self-start md:self-auto">
+                    <button class="filter-btn active px-4 py-2 rounded-lg text-xs font-medium transition-all bg-brand-500 text-white shadow-md" data-filter="all" onclick="filterProjects('all', this)" data-i18n="filter-all">Todos</button>
+                    <button class="filter-btn px-4 py-2 rounded-lg text-xs font-medium text-gray-400 hover:text-white transition-all" data-filter="web" onclick="filterProjects('web', this)" data-i18n="filter-web">Web Dev</button>
+                    <button class="filter-btn px-4 py-2 rounded-lg text-xs font-medium text-gray-400 hover:text-white transition-all" data-filter="fullstack" onclick="filterProjects('fullstack', this)" data-i18n="filter-fullstack">Full Stack</button>
+                </div>
+            </div>
+
+            <!-- PROJECTS GRID GALLERY -->
+            <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Projects will be rendered dynamically by JavaScript -->
             </div>
 
         </section>
 
-
-        <!-- Navegación -->
-        <nav class="main-menu">
-
-            <button
-                class="menu-item active"
-                data-section="about"
-                data-es="Acerca de mí"
-                data-en="About Me">
-                Acerca de mí
-            </button>
-
-            <button
-                class="menu-item"
-                data-section="experience"
-                data-es="Experiencia"
-                data-en="Experience">
-                Experiencia
-            </button>
-
-            <button
-                class="menu-item"
-                data-section="projects"
-                data-es="Proyectos"
-                data-en="Projects">
-                Proyectos
-            </button>
-
-        </nav>
-
-
-        <!-- Contenido -->
-        <section class="content-area">
-
-            <!-- ACERCA DE MI -->
-            <div id="about" class="content-section active">
-
-                <h3
-                    data-es="Acerca de mí"
-                    data-en="About Me">
-                    Acerca de mí
-                </h3>
-
-                <p
-                    data-es="Soy un profesional de Tecnologías de la Información con experiencia en desarrollo de aplicaciones web y administración de soluciones tecnológicas. Me apasiona la tecnología, la automatización de procesos y la resolución de problemas mediante soluciones eficientes y funcionales."
-                    data-en="I am an Information Technology professional with experience in web application development and technology solutions administration. I am passionate about technology, process automation, and solving problems through efficient and functional solutions.">
-                    Soy un profesional de Tecnologías de la Información con experiencia en desarrollo de aplicaciones web y administración de soluciones tecnológicas. Me apasiona la tecnología, la automatización de procesos y la resolución de problemas mediante soluciones eficientes y funcionales.
-                </p>
-
-                <p
-                    data-es="Cuento con experiencia trabajando con PHP, Laravel, JavaScript, bases de datos SQL y servidores Linux y Windows. También tengo experiencia en infraestructura de red, soporte técnico y mantenimiento de sistemas."
-                    data-en="I have experience working with PHP, Laravel, JavaScript, SQL databases, and Linux and Windows servers. I also have experience with network infrastructure, technical support, and system maintenance.">
-                    Cuento con experiencia trabajando con PHP, Laravel, JavaScript, bases de datos SQL y servidores Linux y Windows. También tengo experiencia en infraestructura de red, soporte técnico y mantenimiento de sistemas.
-                </p>
-
-
-                <!-- Habilidades -->
-                <div class="skills">
-
-                    <h4
-                        data-es="Tecnologías y habilidades"
-                        data-en="Technologies & Skills">
-                        Tecnologías y habilidades
-                    </h4>
-
-                    <div class="skills-grid">
-
-                        <span>PHP</span>
-                        <span>Laravel</span>
-                        <span>JavaScript</span>
-                        <span>HTML5</span>
-                        <span>CSS3</span>
-                        <span>Bootstrap</span>
-                        <span>MySQL</span>
-                        <span>PostgreSQL</span>
-                        <span>SQL Server</span>
-                        <span>Linux</span>
-                        <span>Windows Server</span>
-                        <span>Nginx</span>
-                        <span>Apache</span>
-                        <span>Git</span>
-                        <span>REST API</span>
-                    </div>
-
+        <!-- SKILLS & TECH STACK -->
+        <section id="skills" class="py-16 border-t border-gray-800/80">
+            <h2 class="text-3xl font-bold text-white tracking-tight mb-8 text-center" data-i18n="skills-title">Tecnologías y Herramientas</h2>
+            
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
+                <div class="glass-card p-4 rounded-xl flex flex-col items-center justify-center gap-2 text-center group hover:-translate-y-1 transition-transform">
+                    <i data-lucide="code" class="w-8 h-8 text-brand-400 group-hover:scale-110 transition-transform"></i>
+                    <span class="text-sm font-semibold text-gray-200">Frontend</span>
+                    <span class="text-xs text-gray-400">CSS, Bootstrap, Tailwind, JavaScript</span>
                 </div>
-
+                <div class="glass-card p-4 rounded-xl flex flex-col items-center justify-center gap-2 text-center group hover:-translate-y-1 transition-transform">
+                    <i data-lucide="server" class="w-8 h-8 text-emerald-400 group-hover:scale-110 transition-transform"></i>
+                    <span class="text-sm font-semibold text-gray-200">Backend</span>
+                    <span class="text-xs text-gray-400">PHP, Laravel, ASP.net, Java</span>
+                </div>
+                <div class="glass-card p-4 rounded-xl flex flex-col items-center justify-center gap-2 text-center group hover:-translate-y-1 transition-transform">
+                    <i data-lucide="database" class="w-8 h-8 text-purple-400 group-hover:scale-110 transition-transform"></i>
+                    <span class="text-sm font-semibold text-gray-200">Databases</span>
+                    <span class="text-xs text-gray-400">PostgreSQL, MySQL, SQL Server</span>
+                </div>
+                <div class="glass-card p-4 rounded-xl flex flex-col items-center justify-center gap-2 text-center group hover:-translate-y-1 transition-transform">
+                    <i data-lucide="terminal" class="w-8 h-8 text-amber-400 group-hover:scale-110 transition-transform"></i>
+                    <span class="text-sm font-semibold text-gray-200">O.S.</span>
+                    <span class="text-xs text-gray-400">Windows, Linux</span>
+                </div>
+                <div class="glass-card p-4 rounded-xl flex flex-col items-center justify-center gap-2 text-center group hover:-translate-y-1 transition-transform">
+                    <i data-lucide="git-branch" class="w-8 h-8 text-red-400 group-hover:scale-110 transition-transform"></i>
+                    <span class="text-sm font-semibold text-gray-200">DevOps</span>
+                    <span class="text-xs text-gray-400">GitHub</span>
+                </div>
+                <div class="glass-card p-4 rounded-xl flex flex-col items-center justify-center gap-2 text-center group hover:-translate-y-1 transition-transform">
+                    <i data-lucide="cpu" class="w-8 h-8 text-sky-400 group-hover:scale-110 transition-transform"></i>
+                    <span class="text-sm font-semibold text-gray-200">Architecture</span>
+                    <span class="text-xs text-gray-400">Client-Server, MVC, REST APIs</span>
+                </div>
             </div>
-
-
-            <!-- EXPERIENCIA -->
-            <div id="experience" class="content-section">
-
-                <h3
-                    data-es="Experiencia"
-                    data-en="Experience">
-                    Experiencia
-                </h3>
-
-
-                <div class="experience-item">
-
-                    <div class="experience-header">
-
-                        <div>
-                            <h4>Especialista / Administrador de TI</h4>
-
-                            <p class="company">
-                                Tecnologías de la Información
-                            </p>
-                        </div>
-
-                        <span class="date">
-                            2021 - Actualidad
-                        </span>
-
-                    </div>
-
-                    <ul>
-
-                        <li
-                            data-es="Desarrollo, implementación y mantenimiento de aplicaciones web utilizando PHP, Laravel y JavaScript."
-                            data-en="Development, implementation, and maintenance of web applications using PHP, Laravel, and JavaScript.">
-                            Desarrollo, implementación y mantenimiento de aplicaciones web utilizando PHP, Laravel y JavaScript.
-                        </li>
-
-                        <li
-                            data-es="Administración y mantenimiento de bases de datos PostgreSQL, MySQL y MariaDB."
-                            data-en="Administration and maintenance of PostgreSQL, MySQL, and MariaDB databases.">
-                            Administración y mantenimiento de bases de datos PostgreSQL, MySQL y MariaDB.
-                        </li>
-
-                        <li
-                            data-es="Administración y configuración de servidores Linux y Windows Server."
-                            data-en="Administration and configuration of Linux and Windows Server environments.">
-                            Administración y configuración de servidores Linux y Windows Server.
-                        </li>
-
-                        <li
-                            data-es="Configuración y mantenimiento de servidores web Nginx y Apache."
-                            data-en="Configuration and maintenance of Nginx and Apache web servers.">
-                            Configuración y mantenimiento de servidores web Nginx y Apache.
-                        </li>
-
-                        <li
-                            data-es="Soporte técnico y resolución de incidencias relacionadas con aplicaciones, servidores, redes y equipos de cómputo."
-                            data-en="Technical support and troubleshooting related to applications, servers, networks, and computer equipment.">
-                            Soporte técnico y resolución de incidencias relacionadas con aplicaciones, servidores, redes y equipos de cómputo.
-                        </li>
-
-                        <li
-                            data-es="Desarrollo de soluciones para automatizar y optimizar procesos administrativos y operativos."
-                            data-en="Development of solutions to automate and optimize administrative and operational processes.">
-                            Desarrollo de soluciones para automatizar y optimizar procesos administrativos y operativos.
-                        </li>
-
-                    </ul>
-
-                </div>
-
-
-                <div class="experience-item">
-
-                    <div class="experience-header">
-
-                        <div>
-                            <h4>Técnico de Soporte e Infraestructura</h4>
-
-                            <p class="company">
-                                Soporte Técnico
-                            </p>
-                        </div>
-
-                        <span class="date">
-                            Experiencia previa
-                        </span>
-
-                    </div>
-
-                    <ul>
-
-                        <li
-                            data-es="Soporte técnico a ingenieros de campo y usuarios."
-                            data-en="Technical support for field engineers and users.">
-                            Soporte técnico a ingenieros de campo y usuarios.
-                        </li>
-
-                        <li
-                            data-es="Instalación y mantenimiento de sistemas de telecomunicaciones y videovigilancia."
-                            data-en="Installation and maintenance of telecommunications and video surveillance systems.">
-                            Instalación y mantenimiento de sistemas de telecomunicaciones y videovigilancia.
-                        </li>
-
-                        <li
-                            data-es="Diagnóstico y mantenimiento preventivo y correctivo de equipos de cómputo."
-                            data-en="Diagnosis and preventive and corrective maintenance of computer equipment.">
-                            Diagnóstico y mantenimiento preventivo y correctivo de equipos de cómputo.
-                        </li>
-
-                        <li
-                            data-es="Gestión de reportes de servicio, tickets, inventario y almacén."
-                            data-en="Management of service reports, support tickets, inventory, and warehouse operations.">
-                            Gestión de reportes de servicio, tickets, inventario y almacén.
-                        </li>
-
-                    </ul>
-
-                </div>
-
-            </div>
-
-
-            <!-- PROYECTOS -->
-            <div id="projects" class="content-section">
-
-                <h3
-                    data-es="Proyectos"
-                    data-en="Projects">
-                    Proyectos
-                </h3>
-
-
-                <div class="projects-grid">
-
-                    <article class="project-card">
-
-                        <div class="project-icon">
-                            &lt;/&gt;
-                        </div>
-
-                        <h4>
-                                Calculadora de Prestaciones Laborales
-                        </h4>
-
-                        <p
-                            data-es="Aplicación web para el cálculo automatizado de prestaciones e indemnizaciones laborales en casos de renuncia voluntaria y despido."
-                            data-en="Web application for the automated calculation of employment benefits and severance compensation in cases of voluntary resignation and dismissal.">
-                            Aplicación web para el cálculo automatizado de prestaciones e indemnizaciones laborales en casos de renuncia voluntaria y despido.
-                        </p>
-
-                        <div class="project-tech">
-                            <span>JavaScript</span>
-                            <span>Tailwind CSS</span>
-                        </div>
-
-                    </article>
-
-
-                    <article class="project-card">
-
-                        <div class="project-icon">
-                            &lt;/&gt;
-                        </div>
-
-                        <h4>
-                            Sistema de Gestión
-                        </h4>
-
-                        <p
-                            data-es="Aplicación web para la administración y seguimiento de procesos institucionales."
-                            data-en="Web application for the administration and monitoring of institutional processes.">
-                            Aplicación web para la administración y seguimiento de procesos institucionales.
-                        </p>
-
-                        <div class="project-tech">
-                            <span>PHP</span>
-                            <span>Laravel</span>
-                            <span>MySQL</span>
-                            <span>JavaScript</span>
-                        </div>
-
-                    </article>
-
-
-                    <article class="project-card">
-
-                        <div class="project-icon">
-                            DB
-                        </div>
-
-                        <h4>
-                            Sistemas de Información
-                        </h4>
-
-                        <p
-                            data-es="Desarrollo y mantenimiento de sistemas conectados a bases de datos PostgreSQL y MySQL."
-                            data-en="Development and maintenance of systems connected to PostgreSQL and MySQL databases.">
-                            Desarrollo y mantenimiento de sistemas conectados a bases de datos PostgreSQL y MySQL.
-                        </p>
-
-                        <div class="project-tech">
-                            <span>PostgreSQL</span>
-                            <span>MySQL</span>
-                            <span>Laravel</span>
-                        </div>
-
-                    </article>
-
-
-                    <article class="project-card">
-
-                        <div class="project-icon">
-                            ⚙
-                        </div>
-
-                        <h4>
-                            Automatización
-                        </h4>
-
-                        <p
-                            data-es="Soluciones para automatizar procesos y mejorar la gestión de información."
-                            data-en="Solutions designed to automate processes and improve information management.">
-                            Soluciones para automatizar procesos y mejorar la gestión de información.
-                        </p>
-
-                        <div class="project-tech">
-                            <span>JavaScript</span>
-                            <span>PHP</span>
-                            <span>APIs</span>
-                        </div>
-
-                    </article>
-
-
-                </div>
-
-            </div>
-
         </section>
 
-
-        <!-- Footer -->
-        <footer>
-
-            <div class="social-links">
-
-                <a href="https://github.com/Wongberry" target="_blank">
-                    GitHub
+        <!-- FOOTER INTEGRADO -->
+        <footer class="mt-20 pt-8 border-t border-gray-800/80 flex flex-col sm:flex-row items-center justify-between gap-6 text-sm text-gray-400">
+            <div class="social-links flex items-center gap-6">
+                <a href="https://github.com/Wongberry" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 hover:text-brand-400 transition-colors group">
+                    <i data-lucide="github" class="w-4 h-4 group-hover:scale-110 transition-transform"></i>
+                    <span>GitHub</span>
                 </a>
-
-                <a href="https://www.linkedin.com/in/aldo-wong" target="_blank">
-                    LinkedIn
+                <a href="https://www.linkedin.com/in/aldo-wong" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 hover:text-brand-400 transition-colors group">
+                    <i data-lucide="linkedin" class="w-4 h-4 group-hover:scale-110 transition-transform"></i>
+                    <span>LinkedIn</span>
                 </a>
-
-                <a href="mailto:aldonoecanowong@gmail.com">
-                    Email
+                <a href="mailto:aldonoecanowong@gmail.com" class="flex items-center gap-2 hover:text-brand-400 transition-colors group">
+                    <i data-lucide="mail" class="w-4 h-4 group-hover:scale-110 transition-transform"></i>
+                    <span>Email</span>
                 </a>
-
             </div>
 
-            <p>
-                © 2026 Aldo Wong
+            <p class="text-xs text-gray-500">
+                © 2026 Aldo Wong. <span data-i18n="footer-rights">Todos los derechos reservados.</span>
             </p>
-
         </footer>
 
     </main>
 
+    <!-- DETAILED PROJECT MODAL (Con Carrusel/Galería) -->
+    <div id="project-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-md transition-opacity duration-300">
+        <div class="relative w-full max-w-4xl max-h-[90vh] bg-gray-900 border border-gray-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col">
+            
+            <!-- Modal Header -->
+            <div class="p-6 border-b border-gray-800 flex items-center justify-between bg-gray-900/90">
+                <div>
+                    <span id="modal-category" class="text-xs font-semibold uppercase tracking-wider text-brand-400">Categoría</span>
+                    <h3 id="modal-title" class="text-2xl font-bold text-white mt-1">Nombre del Proyecto</h3>
+                </div>
+                <button onclick="closeModal()" class="p-2 text-gray-400 hover:text-white bg-gray-800/80 hover:bg-gray-700 rounded-lg transition-colors">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
 
-    <script src="js/script.js"></script>
+            <!-- Modal Content (Scrollable) -->
+            <div class="p-6 overflow-y-auto space-y-6 flex-1">
+                
+                <!-- Gallery Carousel Section -->
+                <div class="space-y-3">
+                    <div class="relative h-64 sm:h-96 w-full rounded-xl overflow-hidden bg-gray-950 border border-gray-800">
+                        <img id="modal-main-image" src="" alt="Vista previa del proyecto" class="w-full h-full object-cover transition-all duration-300" onerror="this.src='https://via.placeholder.com/1000x600?text=Imagen+No+Disponible'">
+                    </div>
+                    <!-- Gallery Thumbnails -->
+                    <div id="modal-thumbnails" class="flex gap-3 overflow-x-auto pb-2">
+                        <!-- Rendered by JS -->
+                    </div>
+                </div>
 
+                <!-- Description & Features Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 pt-2">
+                    <div class="lg:col-span-2 space-y-4">
+                        <h4 class="text-lg font-semibold text-white" data-i18n="modal-about-title">Sobre el Proyecto</h4>
+                        <p id="modal-description" class="text-gray-300 leading-relaxed text-sm">
+                            Descripción completa del proyecto...
+                        </p>
+                        
+                        <div class="space-y-2 pt-2">
+                            <h5 class="text-sm font-semibold text-gray-200" data-i18n="modal-features-title">Características Principales:</h5>
+                            <ul id="modal-features" class="list-disc list-inside text-sm text-gray-400 space-y-1">
+                                <!-- Features populated by JS -->
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Tech Stack & Links Sidebar inside modal -->
+                    <div class="space-y-6 bg-gray-950/50 p-5 rounded-xl border border-gray-800/80 h-fit">
+                        <div>
+                            <h5 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3" data-i18n="modal-tech-title">Tecnologías Usadas</h5>
+                            <div id="modal-tech-stack" class="flex flex-wrap gap-2">
+                                <!-- Tech badges -->
+                            </div>
+                        </div>
+
+                        <div class="pt-4 border-t border-gray-800 flex flex-col gap-3">
+                            <a id="modal-live-link" href="#" target="_blank" rel="noopener" class="w-full py-2.5 px-4 rounded-lg bg-brand-500 hover:bg-brand-600 text-white font-medium text-xs text-center transition-colors flex items-center justify-center gap-2">
+                                <i data-lucide="external-link" class="w-4 h-4"></i>
+                                <span data-i18n="modal-btn-live">Ver Demo En Vivo</span>
+                            </a>
+                            <a id="modal-github-link" href="#" target="_blank" rel="noopener" class="w-full py-2.5 px-4 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-200 font-medium text-xs text-center border border-gray-700 transition-colors flex items-center justify-center gap-2">
+                                <i data-lucide="github" class="w-4 h-4"></i>
+                                <span data-i18n="modal-btn-code">Código fuente</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Data Translation Object
+        const translations = {
+            es: {
+                "nav-about": "Sobre Mí",
+                "nav-projects": "Proyectos",
+                "nav-skills": "Habilidades",
+                "hero-badge": "Disponible para nuevos proyectos",
+                "hero-title-1": "Transformando ideas en",
+                "hero-title-2": "Experiencias Digitales",
+                "hero-desc": "Hola, soy Aldo Wong. Desarrollador de Software enfocado en construir aplicaciones web y sistemas de gestión modernos, eficientes y escalables. Apasionado por la buena arquitectura de software y el desarrollo de soluciones a medida.",
+                "hero-btn-projects": "Ver Proyectos",
+                "hero-btn-contact": "Contactar",
+                "hero-code-footer": "Soluciones ágiles y funcionales",
+                "projects-title": "Proyectos Destacados",
+                "projects-subtitle": "Explora los sistemas web y herramientas que he diseñado y desarrollado.",
+                "filter-all": "Todos",
+                "filter-web": "Web Dev",
+                "filter-fullstack": "Full Stack",
+                "skills-title": "Tecnologías y Herramientas",
+                "footer-rights": "Todos los derechos reservados.",
+                "card-view-details": "Ver Detalles",
+                "modal-about-title": "Sobre el Proyecto",
+                "modal-features-title": "Módulos y Características:",
+                "modal-tech-title": "Tecnologías Usadas",
+                "modal-btn-live": "Ver Demo En Vivo",
+                "modal-btn-code": "Ver Código Fuente"
+            },
+            en: {
+                "nav-about": "About Me",
+                "nav-projects": "Projects",
+                "nav-skills": "Skills",
+                "hero-badge": "Available for new projects",
+                "hero-title-1": "Transforming ideas into",
+                "hero-title-2": "Digital Experiences",
+                "hero-desc": "Hi, I am Aldo Wong. A Software Developer focused on building modern, efficient, and scalable web applications and management systems. Passionate about software architecture and custom software solutions.",
+                "hero-btn-projects": "View Projects",
+                "hero-btn-contact": "Get in Touch",
+                "hero-code-footer": "Agile and reliable solutions",
+                "projects-title": "Featured Projects",
+                "projects-subtitle": "Explore the web systems and tools I have designed and developed.",
+                "filter-all": "All",
+                "filter-web": "Web Dev",
+                "filter-fullstack": "Full Stack",
+                "skills-title": "Technologies & Tools",
+                "footer-rights": "All rights reserved.",
+                "card-view-details": "View Details",
+                "modal-about-title": "About the Project",
+                "modal-features-title": "Modules & Features:",
+                "modal-tech-title": "Tech Stack Used",
+                "modal-btn-live": "View Live Demo",
+                "modal-btn-code": "View Source Code"
+            }
+        };
+
+        // Updated Projects Data with local images
+        const projectsData = [
+            {
+                id: "calculadora-prestaciones",
+                category: "web",
+                categoryLabel: { es: "Web Dev", en: "Web Dev" },
+                title: { 
+                    es: "Calculadora de Prestaciones Laborales", 
+                    en: "Labor Benefits Calculator" 
+                },
+                shortDesc: {
+                    es: "Aplicación web para el cálculo automatizado de prestaciones e indemnizaciones laborales en casos de renuncia voluntaria y despido.",
+                    en: "Web application for automated calculation of labor benefits and severance payments for voluntary resignation and dismissal cases."
+                },
+                fullDesc: {
+                    es: "Herramienta web ágil e intuitiva que permite realizar el cálculo exacto de indemnizaciones y prestaciones según la legislación laboral vigente. Diseñada para agilizar procesos de consulta para trabajadores y conciliadores.",
+                    en: "Agile and intuitive web tool designed to compute accurate severance payments and labor benefits under current labor regulations. Built to streamline consultation processes for employees and conciliation agents."
+                },
+                images: [
+                    "img/project_calculadora_1.png",
+                    "img/project_calculadora_2.png",
+                    "img/project_calculadora_3.png"
+                ],
+                tags: ["JavaScript", "Tailwind CSS", "HTML5"],
+                features: {
+                    es: [
+                        "Cálculo automatizado para renuncia voluntaria y despido injustificado",
+                        "Desglose exacto de indemnización constitucional, aguinaldo, vacaciones y prima vacacional",
+                        "Algoritmo ajustado a la legislación laboral y salario diario integrado",
+                        "Interfaz adaptable a móviles y fácil de usar"
+                    ],
+                    en: [
+                        "Automated calculations for voluntary resignation and unfair dismissal",
+                        "Detailed breakdown of constitutional severance, year-end bonus, vacation days, and vacation premium",
+                        "Algorithm adjusted to current labor laws and daily integrated wage",
+                        "Fully responsive mobile-friendly interface"
+                    ]
+                },
+                liveUrl: "https://cclt.tamaulipas.gob.mx/calculadoralaboralcclt/",
+                githubUrl: ""
+            },
+            {
+                id: "control-expedientes",
+                category: "fullstack",
+                categoryLabel: { es: "Full Stack", en: "Full Stack" },
+                title: { 
+                    es: "Sistema de Control de Expedientes", 
+                    en: "Labor File Control System" 
+                },
+                shortDesc: {
+                    es: "Sistema Web para el control y seguimiento de expedientes de conciliación laboral cuyo objetivo es generar reportes y estadística.",
+                    en: "Web System for labor conciliation case file tracking and control aimed at generating reports and statistics."
+                },
+                fullDesc: {
+                    es: "Plataforma integral para centros de conciliación laboral que gestiona el ciclo completo de los expedientes jurídicos, desde la recepción del solicitante hasta la resolución de audiencias y pagos.",
+                    en: "Comprehensive platform for labor conciliation centers that manages the entire lifecycle of legal files, from applicant intake to hearing resolutions and payments."
+                },
+                images: [
+                    "img/project_expedientes_1.png",
+                    "img/project_expedientes_2.png",
+                    "img/project_expedientes_3.png"
+                ],
+                tags: ["PHP", "Laravel", "MySQL", "AdminLTE 3.0"],
+                features: {
+                    es: [
+                        "Panel Principal con indicadores clave e historial rápido",
+                        "Módulos clave: Usuarios, Conciliadores, Solicitantes y Citados",
+                        "Gestión y seguimiento de Expedientes, Citatorios y Audiencias",
+                        "Módulo de Pagos y acuerdos conciliatorios",
+                        "Apartado especializado de Reportes y estadísticas ejecutivas"
+                    ],
+                    en: [
+                        "Main Dashboard with key metrics and quick history",
+                        "Key modules: Users, Conciliators, Applicants, and Respondents",
+                        "File management, Citations, and Hearings tracking",
+                        "Payments and conciliation agreement module",
+                        "Specialized Reports and executive statistics panel"
+                    ]
+                },
+                liveUrl: "https://cclt.tamaulipas.gob.mx/expedientesccl/public/login",
+                githubUrl: ""
+            },
+            {
+                id: "gestion-rrhh",
+                category: "fullstack",
+                categoryLabel: { es: "Full Stack", en: "Full Stack" },
+                title: { 
+                    es: "Sistema de Gestión de Recursos Humanos", 
+                    en: "Human Resources Management System" 
+                },
+                shortDesc: {
+                    es: "Sistema Web para la gestión del personal de los centros de conciliación del estado.",
+                    en: "Web System for personnel management across state conciliation centers."
+                },
+                fullDesc: {
+                    es: "Solución de administración institucional centralizada para coordinar expedientes de personal, puestos, plazas y documentación administrativa del equipo de trabajo en los centros de conciliación.",
+                    en: "Centralized institutional management solution to coordinate personnel records, positions, job openings, and administrative documentation for conciliation center teams."
+                },
+                images: [
+                    "img/project_rrhh_1.png",
+                    "img/project_rrhh_2.png",
+                    "img/project_rrhh_3.png"
+                ],
+                tags: ["PHP", "Laravel", "MySQL", "AdminLTE 3.0"],
+                features: {
+                    es: [
+                        "Panel Principal intuitivo con resumen de plantilla de personal",
+                        "Gestión de Usuarios, Empleados y asignación de Plazas",
+                        "Administración digital de Expedientes de personal y Documentos",
+                        "Generación de Reportes de RRHH e informes administrativos"
+                    ],
+                    en: [
+                        "Intuitive Main Dashboard with staff overview",
+                        "User, Employee, and Job Position slot management",
+                        "Digital administration of Personnel Records and Documents",
+                        "Generation of HR Reports and administrative metrics"
+                    ]
+                },
+                liveUrl: "",
+                githubUrl: ""
+            }
+        ];
+
+        let currentLang = 'es';
+
+        // Initialize Application
+        document.addEventListener('DOMContentLoaded', () => {
+            renderProjects('all');
+            lucide.createIcons();
+        });
+
+        // Language Switcher Function
+        function setLanguage(lang) {
+            currentLang = lang;
+            
+            // Toggle Button Styles
+            document.getElementById('btn-es').className = lang === 'es' 
+                ? 'language active px-3 py-1.5 rounded-md transition-all duration-200 text-brand-400 bg-gray-800 shadow-sm' 
+                : 'language px-3 py-1.5 rounded-md text-gray-400 hover:text-white transition-all duration-200';
+            
+            document.getElementById('btn-en').className = lang === 'en' 
+                ? 'language active px-3 py-1.5 rounded-md transition-all duration-200 text-brand-400 bg-gray-800 shadow-sm' 
+                : 'language px-3 py-1.5 rounded-md text-gray-400 hover:text-white transition-all duration-200';
+
+            // Translate static elements
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+
+            // Re-render Projects to update inner dynamic strings
+            const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter') || 'all';
+            renderProjects(activeFilter);
+        }
+
+        // Project Filtering Logic
+        function filterProjects(category, btnElement) {
+            // Update Active Class on Buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-brand-500', 'text-white', 'shadow-md');
+                btn.classList.add('text-gray-400');
+            });
+
+            btnElement.classList.add('active', 'bg-brand-500', 'text-white', 'shadow-md');
+            btnElement.classList.remove('text-gray-400');
+
+            renderProjects(category);
+        }
+
+        // Render Projects Grid
+        function renderProjects(filterCategory) {
+            const grid = document.getElementById('projects-grid');
+            grid.innerHTML = '';
+
+            const filtered = filterCategory === 'all' 
+                ? projectsData 
+                : projectsData.filter(p => p.category === filterCategory);
+
+            filtered.forEach(project => {
+                const card = document.createElement('div');
+                card.className = 'glass-card rounded-2xl overflow-hidden flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 group';
+                
+                card.innerHTML = `
+                    <div>
+                        <!-- Project Cover Image -->
+                        <div class="relative h-52 overflow-hidden bg-gray-900">
+                            <img src="${project.images[0]}" alt="${project.title[currentLang]}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://via.placeholder.com/600x400?text=Imagen+No+Disponible'">
+                            <span class="absolute top-3 left-3 px-3 py-1 bg-gray-950/80 backdrop-blur-md border border-gray-800 rounded-full text-[11px] font-semibold text-brand-400 tracking-wide">
+                                ${project.categoryLabel[currentLang]}
+                            </span>
+                        </div>
+
+                        <!-- Card Body -->
+                        <div class="p-6 space-y-3">
+                            <h3 class="text-xl font-bold text-white group-hover:text-brand-400 transition-colors">${project.title[currentLang]}</h3>
+                            <p class="text-gray-400 text-sm line-clamp-2 leading-relaxed">
+                                ${project.shortDesc[currentLang]}
+                            </p>
+
+                            <!-- Tech Tags -->
+                            <div class="flex flex-wrap gap-1.5 pt-2">
+                                ${project.tags.map(tag => `<span class="px-2.5 py-1 rounded-md bg-gray-800/80 text-gray-300 text-[11px] font-mono border border-gray-700/40">${tag}</span>`).join('')}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card Actions -->
+                    <div class="p-6 pt-0 border-t border-gray-800/40 mt-4 flex items-center justify-between">
+                        <button onclick="openModal('${project.id}')" class="w-full py-2.5 rounded-xl bg-gray-800 hover:bg-brand-500 hover:text-white text-gray-300 font-medium text-xs transition-all flex items-center justify-center gap-2 group/btn">
+                            <span>${translations[currentLang]['card-view-details']}</span>
+                            <i data-lucide="eye" class="w-4 h-4 group-hover/btn:scale-110 transition-transform"></i>
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+
+            lucide.createIcons();
+        }
+
+        // Modal Controls & Image Gallery Carousel Logic
+        function openModal(projectId) {
+            const project = projectsData.find(p => p.id === projectId);
+            if (!project) return;
+
+            // Populate Modal Content
+            document.getElementById('modal-category').textContent = project.categoryLabel[currentLang];
+            document.getElementById('modal-title').textContent = project.title[currentLang];
+            document.getElementById('modal-description').textContent = project.fullDesc[currentLang];
+            
+            // Populate Features List
+            const featuresContainer = document.getElementById('modal-features');
+            featuresContainer.innerHTML = project.features[currentLang].map(f => `<li>${f}</li>`).join('');
+
+            // Populate Tech Stack
+            const techContainer = document.getElementById('modal-tech-stack');
+            techContainer.innerHTML = project.tags.map(t => `<span class="px-2.5 py-1 rounded-md bg-brand-500/10 text-brand-400 border border-brand-500/20 text-xs font-mono">${t}</span>`).join('');
+
+            // Links
+            document.getElementById('modal-live-link').href = project.liveUrl;
+            document.getElementById('modal-github-link').href = project.githubUrl;
+
+            // Gallery Setup
+            const mainImg = document.getElementById('modal-main-image');
+            mainImg.src = project.images[0];
+
+            const thumbsContainer = document.getElementById('modal-thumbnails');
+            thumbsContainer.innerHTML = project.images.map((img, idx) => `
+                <button onclick="setMainModalImage('${img}', this)" class="thumb-btn flex-shrink-0 w-20 h-14 rounded-lg overflow-hidden border-2 ${idx === 0 ? 'border-brand-500' : 'border-transparent opacity-60'} hover:opacity-100 transition-all">
+                    <img src="${img}" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/200x150?text=Error'">
+                </button>
+            `).join('');
+
+            // Display Modal
+            const modal = document.getElementById('project-modal');
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+
+            lucide.createIcons();
+        }
+
+        function setMainModalImage(src, btnElement) {
+            document.getElementById('modal-main-image').src = src;
+            
+            // Highlight Selected Thumbnail
+            document.querySelectorAll('.thumb-btn').forEach(btn => {
+                btn.classList.remove('border-brand-500');
+                btn.classList.add('border-transparent', 'opacity-60');
+            });
+            btnElement.classList.add('border-brand-500');
+            btnElement.classList.remove('border-transparent', 'opacity-60');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('project-modal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+
+        // Close modal on clicking backdrop
+        document.getElementById('project-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'project-modal') {
+                closeModal();
+            }
+        });
+    </script>
 </body>
 </html>
